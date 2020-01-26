@@ -91,7 +91,7 @@ public class SampleOpMode extends LinearOpMode {
             double foundationPower;
             double blockPower;
             double dropperPower;
-            double uArmPower;
+            //double uArmPower;
             double gripperPower;
             //infinity variable
             double infinity = 0.0000000001;
@@ -126,18 +126,18 @@ public class SampleOpMode extends LinearOpMode {
             rightBPower = -gamepad1.right_stick_y;
             liftPower  = -gamepad2.right_stick_y;
             extenderPower = gamepad1.right_trigger;
-            uArmPower = -gamepad2.left_stick_x;
+            //uArmPower = -gamepad2.left_stick_x;
             
             if (gamepad2.left_stick_y != 0){
                 shifterPower -= gamepad2.left_stick_y*0.01;
                 shifterPower = Range.clip(shifterPower, 0, bot.SHIFTER_HOME);
             }
             
-            if (gamepad2.left_stick_x != 0){
+            /*if (gamepad2.left_stick_x != 0){
                 uArmPower = Range.clip(uArmPower, 0.1, 0.5);
                 uArmPower = gamepad2.left_stick_x*0.01;
                
-            }
+            }*/
             
             
             dropperPower = 1.0;
@@ -228,11 +228,11 @@ public class SampleOpMode extends LinearOpMode {
             bot.dropper.setPosition(dropperPower);
             bot.shifter.setPosition(shifterPower);
             bot.gripper.setPosition(gripperPower);
-            bot.uArm.setPower(uArmPower);
+            //bot.uArm.setPower(uArmPower);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f), lift (%.2f), foundation(%.2f), block(%2f), extender (%.2f), uArm (%.2f), grip (%.2f)", leftPower, rightPower, liftPower, foundationPower, blockPower, extenderPower, uArmPower, gripperPower);
+            telemetry.addData("Motors", "left (%.2f), right (%.2f), lift (%.2f), foundation(%.2f), block(%2f), extender (%.2f), grip (%.2f)", leftPower, rightPower, liftPower, foundationPower, blockPower, extenderPower, gripperPower);
             telemetry.addData("Shifter", "shifter "+ shifterPower);
             telemetry.update();
         }

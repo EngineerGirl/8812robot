@@ -290,7 +290,7 @@ public class SampleRobot
         dropper = hwMap.get(Servo.class, "dropper");
         block = hwMap.get(Servo.class, "block");
         foundation = hwMap.get(Servo.class, "foundation");
-        uArm = hwMap.get(CRServo.class, "uArm");
+        //uArm = hwMap.get(CRServo.class, "uArm");
 
         // Set all motors to zero power
         leftFront.setPower(0);
@@ -305,7 +305,7 @@ public class SampleRobot
         dropper.setPosition(1.0);
         block.setPosition(1.0);
         foundation.setPosition(1.0);
-        uArm.setPower(0.0);
+        //uArm.setPower(0.0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
