@@ -260,7 +260,7 @@ public class SampleRobot
     Servo dropper = null;
     Servo block = null;
     Servo foundation = null;
-    CRServo uArm = null;
+    //CRServo uArm = null;
     public static final double SHIFTER_HOME = 0.7;    
     HardwareMap hwMap = null;
     double infinity = 1000000000;
