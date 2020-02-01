@@ -83,9 +83,9 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@Autonomous(name="RED: SKYSTONE Vuforia Nav Webcam", group ="Concept")
+@Autonomous(name="Test Skystone", group ="Concept")
 
-public class AutoRedSkystoneVuforia extends LinearOpMode {
+public class AutoBlueSkystoneVuforia2 extends LinearOpMode {
 
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
@@ -347,13 +347,18 @@ public class AutoRedSkystoneVuforia extends LinearOpMode {
         targetsSkyStone.activate();
         while (!isStopRequested()) {
             if(!targetVisible){
-                moveRobot(0.5, 0.5, 0.5, 0.5);
+                moveRobot(-0.5, -0.5, -0.5, -0.5);
                 sleep(500);
                 
                 moveRobot(0, 0, 0, 0);
                 sleep(500);
                 
                 iterations+=1;
+                if(iterations>=5){
+                    moveRobot(0.5, 0.5, 0.5, 0.5);
+                    sleep(300);
+                    break;
+                }
             }
         
             // check all the trackable targets to see which one (if any) is visible.
@@ -393,22 +398,20 @@ public class AutoRedSkystoneVuforia extends LinearOpMode {
        
         
         }
-        //move backward (camera is on other side, robot is flipped)
-        moveRobot(0.5, 0.5, 0.5, 0.5);
+        //move forward
+        moveRobot(-0.5, -0.5, -0.5, -0.5);
         sleep(200);
         
         moveRobot(0, 0, 0, 0);
-        
         //strafe LEFT
         moveRobot(0.5, -0.5, -0.5, 0.5);
-        sleep(2000);
+        sleep(2500);
         
         moveRobot(0, 0, 0, 0);
         sleep(500);
         
-        //move backward
-        moveRobot(0.5, 0.5, 0.5, 0.5);
-        sleep(170);
+        moveRobot(0.51, 0.51, 0.51, 0.51);
+        sleep(250);
         
         moveRobot(0, 0, 0, 0);
         sleep(500);
@@ -416,33 +419,28 @@ public class AutoRedSkystoneVuforia extends LinearOpMode {
         bot.block.setPosition(0.0);
         sleep(200);
         
-        //move forward
-        moveRobot(-0.5, -0.5, -0.5, -0.5);
+        moveRobot(0.5, 0.5, 0.5, 0.5);
         sleep(100);
-        
-        //strafe RIGHT
+        //strafe LEFT
         moveRobot(-0.5, 0.5, 0.5, -0.5);
-        sleep(1000);
+        sleep(1520);
         
-        //move to other side of the bridge
-        moveRobot(-0.5, -0.5, -0.5, -0.5);
-        sleep(500*(2*iterations));
+        moveRobot(1.0, 1.0, 1.0, 1.0);//made it faster, divided sleep by 2
+        sleep(150*(8*iterations));
         
-        moveRobot(0, 0, 0, 0);
+        /*moveRobot(0, 0, 0, 0);
+        moveRobot(0.5, 0.5, 0.5, 0.5);
+        sleep(600*(iterations));  */
         
-        moveRobot(-0.5, -0.5, -0.5, -0.5);
-        sleep(600*(iterations));  
         
-        //let go
         bot.block.setPosition(1.0);
         sleep(200);
         
         moveRobot(0, 0, 0, 0);
         sleep(200);
         
-        //park under bridge
-        moveRobot(0.5, 0.5, 0.5, 0.5);
-        sleep(400);
+        moveRobot(-1.0, -1.0, -1.0, -1.0);//faster going back
+        sleep(175*(9*iterations));
         
         // Disable Tracking when we are done;
         targetsSkyStone.deactivate();
