@@ -95,6 +95,7 @@ public class SampleOpMode extends LinearOpMode {
             double gripperPower;
             //infinity variable
             double infinity = 0.0000000001;
+            double armDownPower;
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -149,7 +150,7 @@ public class SampleOpMode extends LinearOpMode {
                 gripperPower = 0.75;
             }
             //if statements for power
-            if (gamepad2.right_bumper){
+            if (gamepad2.right_trigger != 0){
                 foundationPower = infinity/1;
             }else {
                 foundationPower = 1/infinity;
@@ -173,13 +174,13 @@ public class SampleOpMode extends LinearOpMode {
             }
             if(gamepad2.left_bumper){
                 armRoundPower = 1;
-            }else if(gamepad2.right_trigger != 0){
+            }else if(gamepad2.right_bumper){
                 armRoundPower = -1;
             }
             else{
                 armRoundPower = 0;
             }
-            if(gamepad2.left_trigger != 0)
+            if(gamepad2.y)
             {
                 blockPower = -1.0;
             }
@@ -188,6 +189,10 @@ public class SampleOpMode extends LinearOpMode {
             }
             if(gamepad2.x){
                 dropperPower = 0.0;
+            }
+            armDownPower = gamepad2.left_trigger;
+            if(gamepad2.left_trigger == 0){
+                armDownPower = -1.0;
             }
             //left and right power for telemetry
             leftPower  = gamepad1.left_stick_y;
@@ -228,11 +233,12 @@ public class SampleOpMode extends LinearOpMode {
             bot.dropper.setPosition(dropperPower);
             bot.shifter.setPosition(shifterPower);
             bot.gripper.setPosition(gripperPower);
+            bot.armDown.setPosition(armDownPower);
             //bot.uArm.setPower(uArmPower);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f), lift (%.2f), foundation(%.2f), block(%2f), extender (%.2f), grip (%.2f)", leftPower, rightPower, liftPower, foundationPower, blockPower, extenderPower, gripperPower);
+            telemetry.addData("Motors", "left (%.2f), right (%.2f), lift (%.2f), foundation(%.2f), block(%2f), extender (%.2f), grip (%.2f), armDown (%.2f)", leftPower, rightPower, liftPower, foundationPower, blockPower, extenderPower, gripperPower, armDownPower);
             telemetry.addData("Shifter", "shifter "+ shifterPower);
             telemetry.update();
         }

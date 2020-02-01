@@ -158,7 +158,7 @@ public class SampleAutonomousOpp extends LinearOpMode {
             //extender.setPosition(0);
             
             //park
-            moveRobot(0.5, 0.5, 0.5, 0.5, 2500);
+            moveRobot(0.6, 0.6, 0.6, 0.6, 2500);
             stopRobot(19200);
             //change to 17000 if uncommenting strafe right code
 

@@ -410,7 +410,7 @@ public class AutoBlueSkystoneVuforia extends LinearOpMode {
         moveRobot(0, 0, 0, 0);
         sleep(500);
         
-        moveRobot(0.5, 0.5, 0.5, 0.5);
+        moveRobot(0.51, 0.51, 0.51, 0.51);
         sleep(250);
         
         moveRobot(0, 0, 0, 0);
@@ -426,11 +426,11 @@ public class AutoBlueSkystoneVuforia extends LinearOpMode {
         sleep(1500);
         
         moveRobot(0.5, 0.5, 0.5, 0.5);
-        sleep(500*(2*iterations));
+        sleep(300*(9*iterations));
         
-        moveRobot(0, 0, 0, 0);
+        /*moveRobot(0, 0, 0, 0);
         moveRobot(0.5, 0.5, 0.5, 0.5);
-        sleep(600*(iterations));  
+        sleep(600*(iterations));  */
         
         
         bot.block.setPosition(1.0);
@@ -440,7 +440,7 @@ public class AutoBlueSkystoneVuforia extends LinearOpMode {
         sleep(200);
         
         moveRobot(-0.5, -0.5, -0.5, -0.5);
-        sleep(400*iterations);
+        sleep(400*(12*iterations));
         
         // Disable Tracking when we are done;
         targetsSkyStone.deactivate();
