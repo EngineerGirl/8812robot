@@ -93,6 +93,7 @@ public class AutoRedSkystoneVuforia extends LinearOpMode {
     SampleRobot bot = new SampleRobot();
     boolean hasMoved;
     int iterations = 0;
+    long detectDuration = 0;
     
     public void moveRobot(double leftF, double rightF, double leftB, double rightB){
         bot.leftFront.setPower(leftF);
@@ -339,11 +340,11 @@ public class AutoRedSkystoneVuforia extends LinearOpMode {
         // Note: To use the remote camera preview:
         // AFTER you hit Init on the Driver Station, use the "options menu" to select "Camera Stream"
         // Tap the preview window to receive a fresh image.
-        moveRobot(0.5, -0.5, -0.5, 0.5);
+        /*moveRobot(0.5, -0.5, -0.5, 0.5);
         sleep(1500);
         
         moveRobot(0, 0, 0, 0);
-        sleep(500);
+        sleep(500);*/
         targetsSkyStone.activate();
         while (!isStopRequested()) {
             if(!targetVisible){
@@ -352,8 +353,13 @@ public class AutoRedSkystoneVuforia extends LinearOpMode {
                 
                 moveRobot(0, 0, 0, 0);
                 sleep(500);
-                
                 iterations+=1;
+                detectDuration+=1000;//changing to 1000 because 500*2 = 1000 duh
+                if(iterations>=5){
+                    moveRobot(-0.5, -0.5, -0.5, -0.5);
+                    sleep(300);
+                    break;
+                }
             }
         
             // check all the trackable targets to see which one (if any) is visible.
@@ -393,57 +399,70 @@ public class AutoRedSkystoneVuforia extends LinearOpMode {
        
         
         }
-        //move backward (camera is on other side, robot is flipped)
+        /*//move backward
         moveRobot(0.5, 0.5, 0.5, 0.5);
-        sleep(200);
+        sleep(100);
         
-        moveRobot(0, 0, 0, 0);
-        
+        moveRobot(0, 0, 0, 0);*/
         //strafe LEFT
         moveRobot(0.5, -0.5, -0.5, 0.5);
-        sleep(2000);
+        sleep(2300);
         
         moveRobot(0, 0, 0, 0);
         sleep(500);
         
-        //move backward
-        moveRobot(0.5, 0.5, 0.5, 0.5);
-        sleep(170);
+        /*moveRobot(-0.51, -0.51, -0.51, -0.51);
+        sleep(250);
         
         moveRobot(0, 0, 0, 0);
-        sleep(500);
+        sleep(500);*/
+        if(iterations==1)
+        {
+            moveRobot(-0.5,-0.5,-0.5,-0.5);
+            sleep(200);
+            moveRobot(0,0,0,0);
+            sleep(1000);
+        }
         
         bot.block.setPosition(0.0);
         sleep(200);
         
-        //move forward
-        moveRobot(-0.5, -0.5, -0.5, -0.5);
-        sleep(100);
         
-        //strafe RIGHT
+        if(iterations!=3 && iterations!=1) //moves too far if 3 and picks up wrong block
+        {
+            moveRobot(0.5, 0.5, 0.5, 0.5);
+            sleep(100);
+        }
+        
+        //strafe LEFT
         moveRobot(-0.5, 0.5, 0.5, -0.5);
-        sleep(1000);
+        sleep(2020);
         
-        //move to other side of the bridge
-        moveRobot(-0.5, -0.5, -0.5, -0.5);
-        sleep(500*(2*iterations));
+        moveRobot(-1.0, -1.0, -1.0, -1.0);
+        sleep(detectDuration/2 + 1000);
+    
+        /*moveRobot(0, 0, 0, 0);
+        moveRobot(0.5, 0.5, 0.5, 0.5);
+        sleep(600*(iterations));  */
         
-        moveRobot(0, 0, 0, 0);
         
-        moveRobot(-0.5, -0.5, -0.5, -0.5);
-        sleep(600*(iterations));  
-        
-        //let go
         bot.block.setPosition(1.0);
         sleep(200);
         
         moveRobot(0, 0, 0, 0);
         sleep(200);
         
-        //park under bridge
-        moveRobot(0.5, 0.5, 0.5, 0.5);
-        sleep(400);
-        
+        //moveRobot(-1.0, -1.0, -1.0, -1.0);//faster going back_____
+        if(detectDuration>=5000 || iterations==2)
+        {
+            moveRobot(1.0, 1.0, 1.0, 1.0);//faster going back
+            sleep(1050);
+        }
+        else
+        {
+            moveRobot(1.0, 1.0, 1.0, 1.0);//faster going back
+            sleep(detectDuration+400); //divided in half from duration/2 +750
+        }
         // Disable Tracking when we are done;
         targetsSkyStone.deactivate();
     }

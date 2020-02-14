@@ -83,9 +83,9 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@Autonomous(name="Test Skystone", group ="Concept")
+@Autonomous(name="BLUE: SkystoneThenFoundation", group ="Concept")
 
-public class AutoBlueSkystoneVuforia2 extends LinearOpMode {
+public class SkystoneThenFoundation extends LinearOpMode {
 
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
@@ -93,6 +93,7 @@ public class AutoBlueSkystoneVuforia2 extends LinearOpMode {
     SampleRobot bot = new SampleRobot();
     boolean hasMoved;
     int iterations = 0;
+    long detectDuration = 0;
     
     public void moveRobot(double leftF, double rightF, double leftB, double rightB){
         bot.leftFront.setPower(leftF);
@@ -352,15 +353,14 @@ public class AutoBlueSkystoneVuforia2 extends LinearOpMode {
                 
                 moveRobot(0, 0, 0, 0);
                 sleep(500);
-                
                 iterations+=1;
+                detectDuration+=1000;//changing to 1000 because 500*2 = 1000 duh
                 if(iterations>=5){
                     moveRobot(0.5, 0.5, 0.5, 0.5);
-                    sleep(300);
+                    sleep(500);
                     break;
                 }
             }
-            iterations=iterations;
         
             // check all the trackable targets to see which one (if any) is visible.
             targetVisible = false;
@@ -399,43 +399,51 @@ public class AutoBlueSkystoneVuforia2 extends LinearOpMode {
        
         
         }
-        //move forward
-        moveRobot(-0.5, -0.5, -0.5, -0.5);
-        sleep(200);
+        /*//move backward
+        moveRobot(0.5, 0.5, 0.5, 0.5);
+        sleep(100);
         
-        moveRobot(0, 0, 0, 0);
+        moveRobot(0, 0, 0, 0);*/
         //strafe LEFT
         moveRobot(0.5, -0.5, -0.5, 0.5);
-        sleep(2500);
+        sleep(2300);
         
         moveRobot(0, 0, 0, 0);
         sleep(500);
         
-        moveRobot(0.51, 0.51, 0.51, 0.51);
+        /*moveRobot(-0.51, -0.51, -0.51, -0.51);
         sleep(250);
         
         moveRobot(0, 0, 0, 0);
-        sleep(500);
+        sleep(500);*/
+        moveRobot(0.5,0.5,0.5,0.5);
+        sleep(530);
+        moveRobot(0,0,0,0);
+        sleep(1000);
         
         bot.block.setPosition(0.0);
         sleep(200);
         
-        moveRobot(0.5, 0.5, 0.5, 0.5);
+        
+        moveRobot(-0.5, -0.5, -0.5, -0.5);
         sleep(100);
+        
         //strafe LEFT
         moveRobot(-0.5, 0.5, 0.5, -0.5);
-        sleep(3000);
+        sleep(2020);
         
-        moveRobot(0.0, 0.0, 0.0, 0.0);
-        sleep(2520);
-        
-        moveRobot(1.0, 1.0, 1.0, 1.0);//made it faster, divided sleep by 2
-        sleep(150*(4*iterations));
-        
+        moveRobot(1.0, 1.0, 1.0, 1.0);
+        sleep(detectDuration+1700);
+    
         /*moveRobot(0, 0, 0, 0);
         moveRobot(0.5, 0.5, 0.5, 0.5);
         sleep(600*(iterations));  */
         
+        
+        
+        
+        moveRobot(-0.5, 0.5, -0.5, 0.5);
+        sleep(1800);
         
         bot.block.setPosition(1.0);
         sleep(200);
@@ -443,9 +451,40 @@ public class AutoBlueSkystoneVuforia2 extends LinearOpMode {
         moveRobot(0, 0, 0, 0);
         sleep(200);
         
-        moveRobot(-1.0, -1.0, -1.0, -1.0);//faster going back
-        sleep(175*(9*iterations));
+        moveRobot(0.5, 0.5, 0.5, 0.5);
+        sleep(2000);
         
+        bot.foundation.setPosition(0.0);
+        moveRobot(0,0,0,0);
+        sleep(500);
+        
+        bot.foundation.setPosition(0.0);
+        moveRobot(-0.6,-0.6,-0.6,-0.6);
+        sleep(2900);
+        
+        
+        
+        moveRobot(0,0,0,0);
+        sleep(1500);
+        
+        bot.foundation.setPosition(1.0);
+        moveRobot(1.0,-1.0,-1.0,1.0);
+        sleep(1250);
+        
+        
+        
+        
+        /*//moveRobot(-1.0, -1.0, -1.0, -1.0);//faster going back_____
+        if(detectDuration>=5000 || iterations==2)
+        {
+            moveRobot(-1.0, -1.0, -1.0, -1.0);//faster going back
+            sleep(1050);
+        }
+        else
+        {
+            moveRobot(-1.0, -1.0, -1.0, -1.0);//faster going back
+            sleep(detectDuration+400); //divided in half from duration/2 +750
+        }*/
         // Disable Tracking when we are done;
         targetsSkyStone.deactivate();
     }

@@ -180,7 +180,7 @@ public class SampleOpMode extends LinearOpMode {
             else{
                 armRoundPower = 0;
             }
-            if(gamepad2.y)
+            if(gamepad1.y)
             {
                 blockPower = -1.0;
             }
@@ -193,6 +193,9 @@ public class SampleOpMode extends LinearOpMode {
             armDownPower = gamepad2.left_trigger;
             if(gamepad2.left_trigger == 0){
                 armDownPower = -1.0;
+            }
+            if(gamepad2.y){
+                shifterPower = 0.0;
             }
             //left and right power for telemetry
             leftPower  = gamepad1.left_stick_y;

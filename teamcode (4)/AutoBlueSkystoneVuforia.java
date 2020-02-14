@@ -354,10 +354,10 @@ public class AutoBlueSkystoneVuforia extends LinearOpMode {
                 moveRobot(0, 0, 0, 0);
                 sleep(500);
                 iterations+=1;
-                detectDuration+=2500;
+                detectDuration+=1000;//changing to 1000 because 500*2 = 1000 duh
                 if(iterations>=5){
                     moveRobot(0.5, 0.5, 0.5, 0.5);
-                    sleep(300);
+                    sleep(500);
                     break;
                 }
             }
@@ -399,36 +399,42 @@ public class AutoBlueSkystoneVuforia extends LinearOpMode {
        
         
         }
-        //move forward
-        moveRobot(-0.5, -0.5, -0.5, -0.5);
-        sleep(200);
+        /*//move backward
+        moveRobot(0.5, 0.5, 0.5, 0.5);
+        sleep(100);
         
-        moveRobot(0, 0, 0, 0);
+        moveRobot(0, 0, 0, 0);*/
         //strafe LEFT
         moveRobot(0.5, -0.5, -0.5, 0.5);
-        sleep(2500);
+        sleep(2300);
         
         moveRobot(0, 0, 0, 0);
         sleep(500);
         
-        moveRobot(0.51, 0.51, 0.51, 0.51);
+        /*moveRobot(-0.51, -0.51, -0.51, -0.51);
         sleep(250);
         
         moveRobot(0, 0, 0, 0);
-        sleep(500);
+        sleep(500);*/
+        moveRobot(0.5,0.5,0.5,0.5);
+        sleep(530);
+        moveRobot(0,0,0,0);
+        sleep(1000);
         
         bot.block.setPosition(0.0);
         sleep(200);
         
-        moveRobot(0.5, 0.5, 0.5, 0.5);
+        
+        moveRobot(-0.5, -0.5, -0.5, -0.5);
         sleep(100);
+        
         //strafe LEFT
         moveRobot(-0.5, 0.5, 0.5, -0.5);
-        sleep(1520);
+        sleep(2020);
         
-        moveRobot(0.5, 0.5, 0.5, 0.5);
-        sleep(detectDuration);
-        
+        moveRobot(1.0, 1.0, 1.0, 1.0);
+        sleep(detectDuration/2 + 1000);
+    
         /*moveRobot(0, 0, 0, 0);
         moveRobot(0.5, 0.5, 0.5, 0.5);
         sleep(600*(iterations));  */
@@ -440,9 +446,17 @@ public class AutoBlueSkystoneVuforia extends LinearOpMode {
         moveRobot(0, 0, 0, 0);
         sleep(200);
         
-        moveRobot(-1.0, -1.0, -1.0, -1.0);//faster going back
-        sleep(detectDuration/2);
-        
+        //moveRobot(-1.0, -1.0, -1.0, -1.0);//faster going back_____
+        if(detectDuration>=5000 || iterations==2)
+        {
+            moveRobot(-1.0, -1.0, -1.0, -1.0);//faster going back
+            sleep(1050);
+        }
+        else
+        {
+            moveRobot(-1.0, -1.0, -1.0, -1.0);//faster going back
+            sleep(detectDuration+400); //divided in half from duration/2 +750
+        }
         // Disable Tracking when we are done;
         targetsSkyStone.deactivate();
     }
