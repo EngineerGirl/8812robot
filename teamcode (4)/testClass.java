@@ -99,6 +99,7 @@ public class testClass extends LinearOpMode {
             
             bot.armDown.setPosition(armDownPower);
             //bot.uArm.setPower(uArmPower);
+            
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());

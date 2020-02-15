@@ -93,7 +93,7 @@ public class AutoBlueSkystoneVuforia extends LinearOpMode {
     SampleRobot bot = new SampleRobot();
     boolean hasMoved;
     int iterations = 0;
-    long detectDuration = 0;
+    long detectDuration = 500;
     
     public void moveRobot(double leftF, double rightF, double leftB, double rightB){
         bot.leftFront.setPower(leftF);
@@ -399,6 +399,10 @@ public class AutoBlueSkystoneVuforia extends LinearOpMode {
        
         
         }
+        if(iterations == 1){
+            moveRobot(0.5, 0.5, 0.5, 0.5);
+            sleep(100);
+        }
         /*//move backward
         moveRobot(0.5, 0.5, 0.5, 0.5);
         sleep(100);
@@ -406,7 +410,7 @@ public class AutoBlueSkystoneVuforia extends LinearOpMode {
         moveRobot(0, 0, 0, 0);*/
         //strafe LEFT
         moveRobot(0.5, -0.5, -0.5, 0.5);
-        sleep(2300);
+        sleep(2000);
         
         moveRobot(0, 0, 0, 0);
         sleep(500);
@@ -425,15 +429,15 @@ public class AutoBlueSkystoneVuforia extends LinearOpMode {
         sleep(200);
         
         
-        moveRobot(-0.5, -0.5, -0.5, -0.5);
+        //moveRobot(-0.5, -0.5, -0.5, -0.5);
         sleep(100);
         
         //strafe LEFT
         moveRobot(-0.5, 0.5, 0.5, -0.5);
-        sleep(2020);
+        sleep(1000);
         
         moveRobot(1.0, 1.0, 1.0, 1.0);
-        sleep(detectDuration/2 + 1000);
+        sleep(detectDuration);
     
         /*moveRobot(0, 0, 0, 0);
         moveRobot(0.5, 0.5, 0.5, 0.5);
@@ -455,7 +459,7 @@ public class AutoBlueSkystoneVuforia extends LinearOpMode {
         else
         {
             moveRobot(-1.0, -1.0, -1.0, -1.0);//faster going back
-            sleep(detectDuration+400); //divided in half from duration/2 +750
+            sleep(detectDuration/2); //divided in half from duration/2 +750
         }
         // Disable Tracking when we are done;
         targetsSkyStone.deactivate();

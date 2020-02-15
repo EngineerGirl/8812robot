@@ -93,13 +93,27 @@ public class SkystoneThenFoundation extends LinearOpMode {
     SampleRobot bot = new SampleRobot();
     boolean hasMoved;
     int iterations = 0;
-    long detectDuration = 0;
+    long detectDuration = 120;
     
     public void moveRobot(double leftF, double rightF, double leftB, double rightB){
         bot.leftFront.setPower(leftF);
         bot.rightFront.setPower(-rightF);
         bot.leftBack.setPower(leftB);
         bot.rightBack.setPower(-rightB);
+    }
+    public void moveRobot1(double leftF, double rightF, double leftB, double rightB, long duration){
+        bot.leftFront.setPower(-leftF);
+        bot.rightFront.setPower(rightF);
+        bot.leftBack.setPower(-leftB);
+        bot.rightBack.setPower(rightB);
+        sleep(duration);
+    }
+    public void stopRobot(long duration){
+        bot.leftFront.setPower(0);
+        bot.rightFront.setPower(0);
+        bot.leftBack.setPower(0);
+        bot.rightBack.setPower(0);
+        sleep(duration);        
     }
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -404,9 +418,11 @@ public class SkystoneThenFoundation extends LinearOpMode {
         sleep(100);
         
         moveRobot(0, 0, 0, 0);*/
-        //strafe LEFT
+        
+        
+        //toward blocks
         moveRobot(0.5, -0.5, -0.5, 0.5);
-        sleep(2300);
+        sleep(2000);
         
         moveRobot(0, 0, 0, 0);
         sleep(500);
@@ -416,48 +432,129 @@ public class SkystoneThenFoundation extends LinearOpMode {
         
         moveRobot(0, 0, 0, 0);
         sleep(500);*/
-        moveRobot(0.5,0.5,0.5,0.5);
-        sleep(530);
+        
+        
+        //adjusting
+        moveRobot(0.3,0.3,0.3,0.3);
+        sleep(700);
         moveRobot(0,0,0,0);
         sleep(1000);
         
+        
+        //grab
         bot.block.setPosition(0.0);
         sleep(200);
         
         
-        moveRobot(-0.5, -0.5, -0.5, -0.5);
+        //adjusting
+        moveRobot(-0.3, -0.3, -0.3, -0.3);
         sleep(100);
         
-        //strafe LEFT
-        moveRobot(-0.5, 0.5, 0.5, -0.5);
-        sleep(2020);
         
-        moveRobot(1.0, 1.0, 1.0, 1.0);
-        sleep(detectDuration+1700);
+        //move away from blocks
+        moveRobot(-0.5, 0.5, 0.5, -0.5);
+        sleep(1200);
+        
+        //skrrrrrrrt all the way to foundation place
+        moveRobot(0.8, 0.8, 0.8, 0.8);
+        sleep(detectDuration + 1100);
     
+        
         /*moveRobot(0, 0, 0, 0);
         moveRobot(0.5, 0.5, 0.5, 0.5);
         sleep(600*(iterations));  */
         
         
         
+
         
-        moveRobot(-0.5, 0.5, -0.5, 0.5);
-        sleep(1800);
-        
+        //let go of block
         bot.block.setPosition(1.0);
         sleep(200);
+        
+        
+        
+        //move forward to foundation
+        moveRobot(0.8, 0.8, 0.8, 0.8);
+        sleep(900);
         
         moveRobot(0, 0, 0, 0);
         sleep(200);
         
+        //turn around 
+        moveRobot(-0.5, 0.5, -0.5, 0.5);
+        sleep(1800);
+        
+        moveRobot(0, 0, 0, 0);
+        sleep(200);
+        
+        //move forward to foundation
+        moveRobot(0.8, 0.8, 0.8, 0.8);
+        sleep(900);
+        //grab and move back, first grab
+            bot.foundation.setPosition(0.1);
+            stopRobot(1000);
+   
+            //strafe RIGHT so the foundation doesn't hit the wall
+            //moveRobot1(-0.5, 0.5, 0.5, -0.5, 1200);  
+            //stopRobot(1000);
+            
+            //move back
+            bot.foundation.setPosition(0.1);
+            moveRobot1(0.6, 0.6, 0.6, 0.6, 2100);
+            
+            //turn to the RIGHT
+            bot.foundation.setPosition(0.1);
+            moveRobot1(-0.6, 0.6, -0.6, 0.6, 1500);
+
+            //move forward to position the foundation in the corner
+            moveRobot1(-0.52, -0.58, -0.52, -0.58, 1000);
+            stopRobot(1000);           
+            
+            //let go of foundation
+            bot.foundation.setPosition(0.1/gamepad1.left_trigger);
+            //extender.setPosition(0);
+            
+            //strafe RIGHT
+            moveRobot1(-0.5, 0.5, 0.5, -0.5, 1000);  
+            stopRobot(1000);
+            
+            //park
+            moveRobot1(0.5, 0.5, 0.5, 0.5, 2500);
+            stopRobot(19200);
+            
+        /*//move toward foundation (strafe)
+        moveRobot(0.5, -0.5, -0.5, 0.5);
+        sleep(1600);
+        
+        moveRobot(0, 0, 0, 0);
+        sleep(200);
+        
+        //block down
+        bot.block.setPosition(0.0);
+        
+        moveRobot(0, 0, 0, 0);
+        sleep(600);
+        
+        //move forward
+        moveRobot(0.8, 0.8, 0.8, 0.8);
+        sleep(500);
+        
+        moveRobot(0, 0, 0, 0);
+        sleep(200);
+        
+        //strafe right
+        moveRobot(-0.5, 0.5, 0.5, -0.5);
+        sleep(3000);
+        */
+        /*//move forward into foundation
         moveRobot(0.5, 0.5, 0.5, 0.5);
         sleep(2000);
-        
+        //grab with foundation servos
         bot.foundation.setPosition(0.0);
         moveRobot(0,0,0,0);
         sleep(500);
-        
+        //move backward to depot
         bot.foundation.setPosition(0.0);
         moveRobot(-0.6,-0.6,-0.6,-0.6);
         sleep(2900);
@@ -466,14 +563,14 @@ public class SkystoneThenFoundation extends LinearOpMode {
         
         moveRobot(0,0,0,0);
         sleep(1500);
-        
+        //let go of foundation and turn around
         bot.foundation.setPosition(1.0);
-        moveRobot(1.0,-1.0,-1.0,1.0);
+        moveRobot(0.9,-0.9,-0.9,0.9); //skrrrrrrt back to under the bridge near the wall
         sleep(1250);
         
         
         
-        
+        */
         /*//moveRobot(-1.0, -1.0, -1.0, -1.0);//faster going back_____
         if(detectDuration>=5000 || iterations==2)
         {
