@@ -52,9 +52,9 @@ import com.qualcomm.robotcore.util.Range;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@Autonomous(name="Foundation RED", group="Linear Opmode")
+@Autonomous(name="Left Park Away", group="Linear Opmode")
 
-public class SampleAutonomousOpp extends LinearOpMode {
+public class leftParkAway extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -75,6 +75,7 @@ public class SampleAutonomousOpp extends LinearOpMode {
         rightBack.setPower(rightB);
         grip.setPosition(100000);
         sleep(duration);
+        stopRobot(10);
     }
     
     //Method to stop robot
@@ -114,73 +115,15 @@ public class SampleAutonomousOpp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            grip.setPosition(-1.0);
-            // Setup a variable for each drive wheel to save power level for telemetry
-            double leftPower;
-            double rightPower;
+            //t.grip.setPosition(-1.0);
             
-            foundation.setPosition(1/0.000000000001);
-            //***this autonomous is the RED foundation autonomous***
-            // Send calculated power to wheels
+            //add code for parking here
+            //sleep duration is in milliseconds
+            //ex. moveRobot(0.5, 0.5, 0.5, 0.5, 1000);
+            moveRobot(0.5, 0.5, 0.5, 0.5, 900);
+            moveRobot(0.5, -0.5, -0.5, 0.5, 3000);
+            stopRobot(28400);
             
-            //strafe RIGHT to grab foundation in center
-            moveRobot(0.5, -0.5, -0.5, 0.5, 1200);  
-            stopRobot(1000);
-            
-            //strafe right to end up in middle
-            //moveRobot(0.5, -0.5, -0.5, 0.5, 1200);  
-            //stopRobot(1000);
-            
-            
-            //forward
-            moveRobot(0.52, 0.58, 0.52, 0.58, 2250);
-            stopRobot(1000);
-            
-            
-            //grab and move back, first grab
-            foundation.setPosition(0.1);
-            stopRobot(1000);
-            
-   
-            /*//strafe LEFT so the foundation doesn't hit the wall
-            moveRobot(-0.5, 0.5, 0.5, -0.5, 1200);  
-            stopRobot(1000);*/
-            
-            //move back
-            foundation.setPosition(0.1);
-            moveRobot(-0.65, -0.65, -0.65, -0.65, 2000);
-            //strafe right
-            moveRobot(-1.0, 1.0, 1.0, -1.0, 1000);
-           //turn to the RIGHT
-            foundation.setPosition(0.1);
-            moveRobot(0.3, -0.3, 0.3, -0.3, 2000);
-            //move back
-            //moveRobot(-0.65, -0.65, -0.65, -0.65, 500);
-            
-            
-            //tur IllegalThreadStateException
-            //moveRobot(0.3, -0.3, 0.3, -0.3, 3000);
-            /*//move forward to position the foundation in the corner
-            moveRobot(0.52, 0.58, 0.52, 0.58, 1000);
-            stopRobot(1000);        */   
-            
-            //let go of foundation
-            foundation.setPosition(10000000);
-            //extender.setPosition(0);
-            
-            //turn to the RIGHT
-            //foundation.setPosition(0.1);
-            moveRobot(0.4, -0.4, 0.4, -0.4, 500);
-            
-            //strafe LEFT so the foundation doesn't hit the wall
-            moveRobot(-1.0, 1.0, 1.0, -1.0, 2500);  
-            stopRobot(19200);
-            
-           /* //park
-            moveRobot(-0.5, -0.5, -0.5, -0.5, 2500);
-            stopRobot(19200);
-            //change to 17000 if uncommenting strafe right code*/
-
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             //telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);

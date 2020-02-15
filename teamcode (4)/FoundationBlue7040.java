@@ -52,9 +52,9 @@ import com.qualcomm.robotcore.util.Range;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@Autonomous(name="Foundation RED", group="Linear Opmode")
+@Autonomous(name="Foundation BLUE", group="Linear Opmode")
 
-public class SampleAutonomousOpp extends LinearOpMode {
+public class FoundationBlue7040 extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -65,7 +65,7 @@ public class SampleAutonomousOpp extends LinearOpMode {
     private Servo foundation = null;
     private Servo extender = null;
     private Servo grip = null;
-    Robot7040 bot = new Robot7040();
+    //SampleRobot bot = new SampleRobot();
     
     //Method to move the robot for a specified duration
     public void moveRobot(double leftF, double rightF, double leftB, double rightB, long duration){
@@ -83,7 +83,7 @@ public class SampleAutonomousOpp extends LinearOpMode {
         rightFront.setPower(0);
         leftBack.setPower(0);
         rightBack.setPower(0);
-        grip.setPosition(1000000);
+        grip.setPosition(100000);
         sleep(duration);        
     } 
     
@@ -103,6 +103,7 @@ public class SampleAutonomousOpp extends LinearOpMode {
         rightBack = hardwareMap.get(DcMotor.class, "rightBack");
         foundation = hardwareMap.get(Servo.class, "foundation");
         grip = hardwareMap.get(Servo.class, "grip");
+        //extender = hardwareMap.get(Servo.class, "extender");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -114,7 +115,7 @@ public class SampleAutonomousOpp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            grip.setPosition(-1.0);
+
             // Setup a variable for each drive wheel to save power level for telemetry
             double leftPower;
             double rightPower;
@@ -123,8 +124,8 @@ public class SampleAutonomousOpp extends LinearOpMode {
             //***this autonomous is the RED foundation autonomous***
             // Send calculated power to wheels
             
-            //strafe RIGHT to grab foundation in center
-            moveRobot(0.5, -0.5, -0.5, 0.5, 1200);  
+            //strafe LEFT to grab foundation in center
+            moveRobot(-0.5, 0.5, 0.5, -0.5, 1200);  
             stopRobot(1000);
             
             //strafe right to end up in middle
@@ -148,18 +149,17 @@ public class SampleAutonomousOpp extends LinearOpMode {
             
             //move back
             foundation.setPosition(0.1);
-            moveRobot(-0.65, -0.65, -0.65, -0.65, 2000);
-            //strafe right
-            moveRobot(-1.0, 1.0, 1.0, -1.0, 1000);
-           //turn to the RIGHT
-            foundation.setPosition(0.1);
-            moveRobot(0.3, -0.3, 0.3, -0.3, 2000);
-            //move back
-            //moveRobot(-0.65, -0.65, -0.65, -0.65, 500);
+            moveRobot(-0.65, -0.65, -0.65, -0.65, 1950);
             
+            //turn to the RIGHT
+            foundation.setPosition(0.1);
+            moveRobot(-0.3, 0.3, -0.3, 0.3, 1500);
+
+            //strafe right
+            moveRobot(1.0, -1.0, -1.0, 1.0, 500);
             
             //tur IllegalThreadStateException
-            //moveRobot(0.3, -0.3, 0.3, -0.3, 3000);
+            moveRobot(-0.3, 0.3, -0.3, 0.3, 3000);
             /*//move forward to position the foundation in the corner
             moveRobot(0.52, 0.58, 0.52, 0.58, 1000);
             stopRobot(1000);        */   
@@ -170,10 +170,10 @@ public class SampleAutonomousOpp extends LinearOpMode {
             
             //turn to the RIGHT
             //foundation.setPosition(0.1);
-            moveRobot(0.4, -0.4, 0.4, -0.4, 500);
+            moveRobot(-0.4, 0.4, -0.4, 0.4, 500);
             
-            //strafe LEFT so the foundation doesn't hit the wall
-            moveRobot(-1.0, 1.0, 1.0, -1.0, 2500);  
+            //strafe RIGHT so the foundation doesn't hit the wall
+            moveRobot(1.0, -1.0, -1.0, 1.0, 2500);  
             stopRobot(19200);
             
            /* //park

@@ -30,7 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.robot.Robot;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -52,43 +52,21 @@ import com.qualcomm.robotcore.util.Range;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@Autonomous(name="Foundation RED", group="Linear Opmode")
+@Autonomous(name="Foundation Autonomous", group="Linear Opmode")
 
-public class SampleAutonomousOpp extends LinearOpMode {
+public class Autonomous7040 extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftFront = null;
-    private DcMotor leftBack  = null;
+    private DcMotor leftBack = null;
     private DcMotor rightFront = null;
     private DcMotor rightBack = null;
+    private Servo block = null;
     private Servo foundation = null;
-    private Servo extender = null;
     private Servo grip = null;
-    Robot7040 bot = new Robot7040();
-    
-    //Method to move the robot for a specified duration
-    public void moveRobot(double leftF, double rightF, double leftB, double rightB, long duration){
-        leftFront.setPower(-leftF);
-        rightFront.setPower(rightF);
-        leftBack.setPower(-leftB);
-        rightBack.setPower(rightB);
-        grip.setPosition(100000);
-        sleep(duration);
-    }
-    
-    //Method to stop robot
-    public void stopRobot(long duration){
-        leftFront.setPower(0);
-        rightFront.setPower(0);
-        leftBack.setPower(0);
-        rightBack.setPower(0);
-        grip.setPosition(1000000);
-        sleep(duration);        
-    } 
-    
+    private Servo slide = null;
 
-        
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -99,14 +77,17 @@ public class SampleAutonomousOpp extends LinearOpMode {
         // step (using the FTC Robot Controller app on the phone).
         leftFront  = hardwareMap.get(DcMotor.class, "leftFront");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
-        leftBack  = hardwareMap.get(DcMotor.class, "leftBack");
+        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
         rightBack = hardwareMap.get(DcMotor.class, "rightBack");
-        foundation = hardwareMap.get(Servo.class, "foundation");
         grip = hardwareMap.get(Servo.class, "grip");
+        block = hardwareMap.get(Servo.class, "block");
+        foundation = hardwareMap.get(Servo.class, "foundation");
+        slide = hardwareMap.get(Servo.class, "slide");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
-        
+        //leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        //rightDrive.setDirection(DcMotor.Direction.REVERSE);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -114,76 +95,108 @@ public class SampleAutonomousOpp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            grip.setPosition(-1.0);
+
             // Setup a variable for each drive wheel to save power level for telemetry
             double leftPower;
             double rightPower;
+            double gripPower;
+            double blockPower;
+            double foundationPower;
+            double slidePower;
+
+            // Choose to drive using either Tank Mode, or POV Mode
+            // Comment out the method that's not used.  The default below is POV.
+
+            // POV Mode uses left stick to go forward, and right stick to turn.
+            // - This uses basic math to combine motions and is easier to drive straight.
+            //double drive = -gamepad1.left_stick_y;
+            //double turn  =  gamepad1.right_stick_x;
+            //leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
+            //rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+
+            // Tank Mode uses one stick to control each wheel.
+            // - This requires no math, but it is hard to drive forward slowly and keep straight.
+            // leftPower  = -gamepad1.left_stick_y ;
+            // rightPower = -gamepad1.right_stick_y ;
             
-            foundation.setPosition(1/0.000000000001);
-            //***this autonomous is the RED foundation autonomous***
+            rightPower = 0;
+            leftPower = 0;
+            gripPower = 0;
+            blockPower = 0;
+            foundationPower = 1.0;
+            slidePower = 0;
+            foundation.setPosition(foundationPower);
             // Send calculated power to wheels
-            
-            //strafe RIGHT to grab foundation in center
-            moveRobot(0.5, -0.5, -0.5, 0.5, 1200);  
-            stopRobot(1000);
-            
-            //strafe right to end up in middle
-            //moveRobot(0.5, -0.5, -0.5, 0.5, 1200);  
-            //stopRobot(1000);
-            
-            
             //forward
-            moveRobot(0.52, 0.58, 0.52, 0.58, 2250);
-            stopRobot(1000);
+            leftFront.setPower(-0.5);
+            rightFront.setPower(0.5);
+            leftBack.setPower(-0.5);
+            rightBack.setPower(0.5);
+            sleep(2050);
             
             
-            //grab and move back, first grab
+            leftFront.setPower(0);
+            rightFront.setPower(0);
+            leftBack.setPower(0);
+            rightBack.setPower(0);
+            sleep(1000);
+            
+            //grab and move back
             foundation.setPosition(0.1);
-            stopRobot(1000);
+            leftFront.setPower(0);
+            rightFront.setPower(0);
+            leftBack.setPower(0);
+            rightBack.setPower(0);
+            sleep(1000);
             
-   
-            /*//strafe LEFT so the foundation doesn't hit the wall
-            moveRobot(-0.5, 0.5, 0.5, -0.5, 1200);  
-            stopRobot(1000);*/
             
-            //move back
+            leftFront.setPower(-0.5);
+            rightFront.setPower(-0.5);
+            leftBack.setPower(0.5);
+            rightBack.setPower(0.5);
+            sleep(2000);
+            
+            
             foundation.setPosition(0.1);
-            moveRobot(-0.65, -0.65, -0.65, -0.65, 2000);
-            //strafe right
-            moveRobot(-1.0, 1.0, 1.0, -1.0, 1000);
-           //turn to the RIGHT
+            leftFront.setPower(0.4);
+            rightFront.setPower(-0.4);
+            leftBack.setPower(0.4);
+            rightBack.setPower(-0.4);
+            sleep(1800);
+            
+            //turn to the left
             foundation.setPosition(0.1);
-            moveRobot(0.3, -0.3, 0.3, -0.3, 2000);
-            //move back
-            //moveRobot(-0.65, -0.65, -0.65, -0.65, 500);
+            leftFront.setPower(0.5);
+            rightFront.setPower(0.5);
+            leftBack.setPower(0.5);
+            rightBack.setPower(0.5);
+            sleep(2000);
+            
+            //strafe left
+            leftFront.setPower(0.5);
+            rightFront.setPower(0.5);
+            leftBack.setPower(-0.5);
+            rightBack.setPower(-0.5);
+            sleep(1000);
             
             
-            //tur IllegalThreadStateException
-            //moveRobot(0.3, -0.3, 0.3, -0.3, 3000);
-            /*//move forward to position the foundation in the corner
-            moveRobot(0.52, 0.58, 0.52, 0.58, 1000);
-            stopRobot(1000);        */   
+            foundation.setPosition(0.1/gamepad1.left_trigger);
+            leftFront.setPower(1);
+            rightFront.setPower(-1);
+            leftBack.setPower(1);
+            rightBack.setPower(-1);
+            sleep(700);
             
-            //let go of foundation
-            foundation.setPosition(10000000);
-            //extender.setPosition(0);
             
-            //turn to the RIGHT
-            //foundation.setPosition(0.1);
-            moveRobot(0.4, -0.4, 0.4, -0.4, 500);
-            
-            //strafe LEFT so the foundation doesn't hit the wall
-            moveRobot(-1.0, 1.0, 1.0, -1.0, 2500);  
-            stopRobot(19200);
-            
-           /* //park
-            moveRobot(-0.5, -0.5, -0.5, -0.5, 2500);
-            stopRobot(19200);
-            //change to 17000 if uncommenting strafe right code*/
+            leftFront.setPower(0);
+            rightFront.setPower(0);
+            leftBack.setPower(0);
+            rightBack.setPower(0);
+            sleep(21150);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            //telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+            telemetry.addData("Motors", "left (%.2f), right (%.2f), block (%.2f), grip (%.2f), foundation (%.2f)", leftPower, rightPower, blockPower, gripPower, foundationPower);
             telemetry.update();
         }
     }
